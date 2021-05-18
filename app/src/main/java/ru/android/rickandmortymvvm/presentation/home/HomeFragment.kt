@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import ru.android.rickandmortymvvm.R
 import ru.android.rickandmortymvvm.databinding.FragmentHomeBinding
 import ru.android.rickandmortymvvm.presentation.MainActivityContract
-import ru.notice.noticemartstest.base.FragmentListenerUtils
+import ru.android.rickandmortymvvm.base.FragmentListenerUtils
 
 class HomeFragment : Fragment() {
 

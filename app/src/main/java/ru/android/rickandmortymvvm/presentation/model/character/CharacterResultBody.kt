@@ -1,14 +1,14 @@
-package ru.android.rickandmortymvvm.data.model.character_body
+package ru.android.rickandmortymvvm.presentation.model.character
 
-data class ResultResponsesBody(
+data class CharacterResultBody(
     val created: String?,
     val episode: List<String>?,
     val gender: String?,
     val id: Int?,
     val image: String?,
-    val location: LocationResponsesBody?,
+    val location: LocationBody?,
     val name: String?,
-    val origin: OriginResponsesBody?,
+    val origin: OriginBody?,
     val species: String?,
     val status: String?,
     val type: String?,

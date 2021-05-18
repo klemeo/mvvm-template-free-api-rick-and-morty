@@ -7,5 +7,5 @@ data class LocationResponsesBodyData(
     @SerializedName("info")
     val info: InfoResponsesBodyData?,
     @SerializedName("results")
-    val results: List<ResultResponsesBodyData>?
+    val results: List<LocationResultResponsesBodyData>?
 )

@@ -2,7 +2,7 @@ package ru.android.rickandmortymvvm.data.model.location_body
 
 
 
-data class ResultResponsesBody(
+data class LocationResultResponsesBody(
     val created: String?,
     val dimension: String?,
     val id: Int?,

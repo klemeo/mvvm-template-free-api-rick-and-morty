@@ -1,6 +1,6 @@
 package ru.android.rickandmortymvvm.presentation.model.location
 
-data class ResultBody(
+data class LocationResultBody(
     val created: String?,
     val dimension: String?,
     val id: Int?,

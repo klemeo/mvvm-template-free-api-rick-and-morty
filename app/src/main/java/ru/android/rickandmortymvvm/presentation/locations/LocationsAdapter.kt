@@ -1,19 +1,19 @@
-package ru.android.rickandmortymvvm.presentation.episode
+package ru.android.rickandmortymvvm.presentation.locations
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_episode.view.*
+import kotlinx.android.synthetic.main.item_location.view.*
 import ru.android.rickandmortymvvm.R
-import ru.android.rickandmortymvvm.presentation.model.episode.ResultBody
+import ru.android.rickandmortymvvm.presentation.model.location.LocationResultBody
 
-class EpisodesAdapter : RecyclerView.Adapter<EpisodesAdapter.ViewHolder>() {
+class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.ViewHolder>() {
 
-    private val mList: MutableList<ResultBody> = mutableListOf()
+    private val mList: MutableList<LocationResultBody> = mutableListOf()
     private var mListener: Listener? = null
 
-    fun add(lstResultVM: List<ResultBody>) {
+    fun add(lstResultVM: List<LocationResultBody>) {
         mList.addAll(lstResultVM)
         notifyItemInserted(this.itemCount)
     }
@@ -28,7 +28,7 @@ class EpisodesAdapter : RecyclerView.Adapter<EpisodesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
         LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_episode, parent, false)
+            .inflate(R.layout.item_location, parent, false)
     )
 
     override fun getItemCount() = mList.size
@@ -38,10 +38,13 @@ class EpisodesAdapter : RecyclerView.Adapter<EpisodesAdapter.ViewHolder>() {
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(result: ResultBody) {
+        fun bind(result: LocationResultBody) {
 
             itemView.textName.text = result.name
 
+            itemView.cardItem.setOnClickListener {
+                mListener?.onPostClicked(result.id ?: 1)
+            }
         }
     }
 }

@@ -1,32 +1,18 @@
 package ru.android.rickandmortymvvm.data.mapper
 
 import ru.android.rickandmortymvvm.base.mapper.Mapper
-import ru.android.rickandmortymvvm.data.model.location_body.InfoResponsesBody
-import ru.android.rickandmortymvvm.data.model.location_body.LocationResponsesBody
-import ru.android.rickandmortymvvm.data.model.location_body.ResultResponsesBody
-import ru.android.rickandmortymvvm.data.model.location_responses.LocationResponsesBodyData
+import ru.android.rickandmortymvvm.data.model.location_body.LocationResultResponsesBody
+import ru.android.rickandmortymvvm.data.model.location_responses.LocationResultResponsesBodyData
 
-class LocationDataMapper : Mapper<LocationResponsesBodyData, LocationResponsesBody> {
+class LocationDataMapper : Mapper<LocationResultResponsesBodyData, LocationResultResponsesBody> {
 
-    override fun map(origin: LocationResponsesBodyData) = LocationResponsesBody(
-        info = origin.info.let { info ->
-            InfoResponsesBody(
-                count = info?.count,
-                next = info?.next,
-                pages = info?.pages,
-                prev = info?.prev,
-            )
-        },
-        results = origin.results?.map { result ->
-            ResultResponsesBody(
-                created = result.created,
-                dimension = result.dimension,
-                id = result.id,
-                name = result.name,
-                residents = result.residents,
-                type = result.type,
-                url = result.url
-            )
-        }
+    override fun map(origin: LocationResultResponsesBodyData) = LocationResultResponsesBody(
+        created = origin.created,
+        dimension = origin.dimension,
+        id = origin.id,
+        name = origin.name,
+        residents = origin.residents,
+        type = origin.type,
+        url = origin.url
     )
 }

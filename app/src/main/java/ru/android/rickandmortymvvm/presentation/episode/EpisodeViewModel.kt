@@ -5,45 +5,46 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import ru.android.rickandmortymvvm.base.interactor.Interactor
 import ru.android.rickandmortymvvm.base.platform.BaseViewModel
 import ru.android.rickandmortymvvm.base.utils.io
 import ru.android.rickandmortymvvm.base.utils.ui
-import ru.android.rickandmortymvvm.domain.interactor.EpisodesInteractor
+import ru.android.rickandmortymvvm.domain.interactor.EpisodeInteractor
 import ru.android.rickandmortymvvm.presentation.model.mapper.EpisodeVMMapper
-import ru.android.rickandmortymvvm.presentation.state.EpisodesVS
+import ru.android.rickandmortymvvm.presentation.state.EpisodeVS
 
-class EpisodesViewModel(
-    private val episodesInteractor: EpisodesInteractor
+class EpisodeViewModel(
+    private val episodeInteractor: EpisodeInteractor
 ) : BaseViewModel() {
 
-    val viewEpisodesState: LiveData<EpisodesVS> get() = mViewEpisodesState
-    private val mViewEpisodesState = MutableLiveData<EpisodesVS>()
+    val viewEpisodeState: LiveData<EpisodeVS> get() = mViewEpisodeState
+    private val mViewEpisodeState = MutableLiveData<EpisodeVS>()
 
     private val episodeVMMapper by lazy { EpisodeVMMapper() }
 
-    fun getEpisodes() {
-        if (viewEpisodesState.value == null) {
+    fun getEpisode(id: Int) {
+        if (viewEpisodeState.value == null) {
             viewModelScope.launch {
-                mViewEpisodesState.value = EpisodesVS.ShowLoader(true)
+                mViewEpisodeState.value = EpisodeVS.ShowLoader(true)
                 try {
                     io {
-                        episodesInteractor.execute(
-                            Interactor.None
+                        episodeInteractor.execute(
+                            EpisodeInteractor.Params(
+                                id = id
+                            )
                         )
                             .collect {
                                 ui {
-                                    mViewEpisodesState.value =
-                                        EpisodesVS.AddEpisodes(episodeVMMapper.map(it))
+                                    mViewEpisodeState.value =
+                                        EpisodeVS.AddEpisode(episodeVMMapper.map(it))
                                 }
                             }
                     }
                 } catch (e: Exception) {
                     ui {
-                        mViewEpisodesState.value = EpisodesVS.Error(e.message)
+                        mViewEpisodeState.value = EpisodeVS.Error(e.message)
                     }
                 }
-                mViewEpisodesState.value = EpisodesVS.ShowLoader(false)
+                mViewEpisodeState.value = EpisodeVS.ShowLoader(false)
             }
         }
     }

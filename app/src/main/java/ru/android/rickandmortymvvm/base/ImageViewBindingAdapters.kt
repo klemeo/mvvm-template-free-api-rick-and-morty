@@ -1,4 +1,4 @@
-package ru.notice.noticemartstest.base
+package ru.android.rickandmortymvvm.base
 
 import android.content.Context
 import android.graphics.drawable.Drawable

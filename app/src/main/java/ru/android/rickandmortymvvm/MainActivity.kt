@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.findNavController
 import ru.android.rickandmortymvvm.presentation.MainActivityContract
+import ru.android.rickandmortymvvm.presentation.characters.CharactersFragmentDirections
+import ru.android.rickandmortymvvm.presentation.episodes.EpisodesFragmentDirections
 import ru.android.rickandmortymvvm.presentation.home.HomeFragmentDirections
+import ru.android.rickandmortymvvm.presentation.locations.LocationsFragmentDirections
 
 class MainActivity : AppCompatActivity(), MainActivityContract {
 
@@ -23,9 +26,21 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
         )
     }
 
+    override fun openCharacterScreen(id: Int) {
+        navController.navigate(
+            CharactersFragmentDirections.actionCharactersFragmentToCharacterFragment(id)
+        )
+    }
+
     override fun openLocationsScreen() {
         navController.navigate(
             HomeFragmentDirections.actionHomeFragmentToLocationsFragment()
+        )
+    }
+
+    override fun openLocationScreen(id: Int) {
+        navController.navigate(
+            LocationsFragmentDirections.actionLocationsFragmentToLocationFragment(id)
         )
     }
 
@@ -34,4 +49,11 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
             HomeFragmentDirections.actionHomeFragmentToEpisodesFragment()
         )
     }
+
+    override fun openEpisodeScreen(id: Int) {
+        navController.navigate(
+            EpisodesFragmentDirections.actionEpisodesFragmentToEpisodeFragment(id)
+        )
+    }
+
 }

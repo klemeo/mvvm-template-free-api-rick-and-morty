@@ -38,6 +38,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -45,18 +46,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
-                android:text="Mechanical Morty" />
+                android:fontFamily="@font/almendra_sc"
+                android:gravity="center"
+                android:text="Mechanical Morty"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/textStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
+                android:gravity="center"
                 android:text="Dead - Robot" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
+                android:fontFamily="@font/bangers"
                 android:text="Last known location:" />
 
             <TextView
@@ -64,11 +71,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
+                android:fontFamily="@font/almendra_sc"
+                android:gravity="center"
                 android:text="Earth (Replacement Dimension)" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
+                android:fontFamily="@font/bangers"
                 android:text="First seen in:" />
 
             <TextView
@@ -76,6 +87,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
+                android:fontFamily="@font/almendra_sc"
+                android:gravity="center"
                 android:text="Rickmancing the Stone" />
 
 

@@ -1,4 +1,4 @@
-package ru.notice.noticemartstest.base
+package ru.android.rickandmortymvvm.base
 
 import androidx.fragment.app.Fragment
 
@@ -9,7 +9,7 @@ object FragmentListenerUtils {
             ?: throw RuntimeException("$fragment must implement $listenerClass")
     }
 
-    fun <T> getFragmentListenerOrNull(fragment: Fragment, listenerClass: Class<T>): T? {
+    private fun <T> getFragmentListenerOrNull(fragment: Fragment, listenerClass: Class<T>): T? {
         val parentFragment = fragment.parentFragment
         val activity = fragment.activity
 

@@ -1,5 +1,6 @@
-package ru.android.rickandmortymvvm.presentation.character
+package ru.android.rickandmortymvvm.presentation.episodes
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,24 +11,33 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_characters.*
-import ru.android.rickandmortymvvm.R
-import ru.android.rickandmortymvvm.databinding.FragmentCharactersBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import ru.android.rickandmortymvvm.presentation.state.CharactersVS
+import ru.android.rickandmortymvvm.R
+import ru.android.rickandmortymvvm.base.FragmentListenerUtils
+import ru.android.rickandmortymvvm.databinding.FragmentEpisodesBinding
+import ru.android.rickandmortymvvm.presentation.EpisodeScreen
+import ru.android.rickandmortymvvm.presentation.state.EpisodesVS
 
-class CharactersFragment : Fragment(), CharactersAdapter.Listener {
+class EpisodesFragment : Fragment(), EpisodesAdapter.Listener {
 
-    private val viewModel: CharactersViewModel by viewModel()
-    private val charactersAdapter = CharactersAdapter()
+    private val viewModel: EpisodesViewModel by viewModel()
+    private val episodesAdapter = EpisodesAdapter()
+    private lateinit var episodeListener: EpisodeScreen
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        episodeListener =
+            FragmentListenerUtils.getFragmentListener(this, EpisodeScreen::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = DataBindingUtil.inflate<FragmentCharactersBinding>(
+        val binding = DataBindingUtil.inflate<FragmentEpisodesBinding>(
             inflater,
-            R.layout.fragment_characters,
+            R.layout.fragment_episodes,
             container,
             false
         )
@@ -41,11 +51,11 @@ class CharactersFragment : Fragment(), CharactersAdapter.Listener {
     }
 
     private fun initView() {
-        charactersAdapter.setListener(this)
-        viewModel.getCharacters()
+        episodesAdapter.setListener(this)
+        viewModel.getEpisodes()
         with(recyclerView) {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            adapter = charactersAdapter
+            adapter = episodesAdapter
         }
         buttonBack.setOnClickListener {
             activity?.onBackPressed()
@@ -53,16 +63,16 @@ class CharactersFragment : Fragment(), CharactersAdapter.Listener {
     }
 
     private fun observeViewModel() {
-        viewModel.viewCharactersState.observe(viewLifecycleOwner, {
+        viewModel.viewEpisodesState.observe(viewLifecycleOwner, {
             when (it) {
-                is CharactersVS.AddCharacters -> {
-                    it.charactersVM.results.let { character ->
+                is EpisodesVS.AddEpisodes -> {
+                    it.episodesVM.results.let { character ->
                         if (character != null) {
-                            charactersAdapter.add(character)
+                            episodesAdapter.add(character)
                         }
                     }
                 }
-                is CharactersVS.ShowLoader -> {
+                is EpisodesVS.ShowLoader -> {
                     if (it.showLoader) {
                         pbPost.visibility = View.VISIBLE
                         recyclerView.visibility = View.INVISIBLE
@@ -72,7 +82,7 @@ class CharactersFragment : Fragment(), CharactersAdapter.Listener {
                     }
                     Log.i("ShowLoader", it.showLoader.toString())
                 }
-                is CharactersVS.Error -> {
+                is EpisodesVS.Error -> {
                     it.message?.let { message -> Log.i("Error", message) }
                 }
             }
@@ -80,8 +90,7 @@ class CharactersFragment : Fragment(), CharactersAdapter.Listener {
     }
 
     override fun onPostClicked(id: Int) {
-        TODO("Not yet implemented")
+        episodeListener.openEpisodeScreen(id)
     }
-
 
 }

@@ -1,4 +1,4 @@
-package ru.android.rickandmortymvvm.presentation.episode
+package ru.android.rickandmortymvvm.presentation.character
 
 import android.os.Bundle
 import android.util.Log
@@ -7,27 +7,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_characters.*
+import androidx.navigation.fragment.navArgs
+import kotlinx.android.synthetic.main.fragment_character.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.android.rickandmortymvvm.R
-import ru.android.rickandmortymvvm.databinding.FragmentEpisodesBinding
-import ru.android.rickandmortymvvm.presentation.state.EpisodesVS
+import ru.android.rickandmortymvvm.databinding.FragmentCharacterBinding
+import ru.android.rickandmortymvvm.presentation.state.CharacterVS
 
-class EpisodesFragment : Fragment() {
+class CharacterFragment : Fragment() {
 
-    private val viewModel: EpisodesViewModel by viewModel()
-    private val episodesAdapter = EpisodesAdapter()
+    private val viewModel: CharacterViewModel by viewModel()
+
+    private val navArgs by navArgs<CharacterFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = DataBindingUtil.inflate<FragmentEpisodesBinding>(
+        val binding = DataBindingUtil.inflate<FragmentCharacterBinding>(
             inflater,
-            R.layout.fragment_episodes,
+            R.layout.fragment_character,
             container,
             false
         )
@@ -41,42 +41,33 @@ class EpisodesFragment : Fragment() {
     }
 
     private fun initView() {
-        viewModel.getEpisodes()
-        with(recyclerView) {
-            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            adapter = episodesAdapter
-        }
+        viewModel.getCharacter(navArgs.id)
         buttonBack.setOnClickListener {
             activity?.onBackPressed()
         }
     }
 
     private fun observeViewModel() {
-        viewModel.viewEpisodesState.observe(viewLifecycleOwner, {
+        viewModel.viewCharacterState.observe(viewLifecycleOwner, {
             when (it) {
-                is EpisodesVS.AddEpisodes -> {
-                    it.episodesVM.results.let { character ->
-                        if (character != null) {
-                            episodesAdapter.add(character)
-                        }
-                    }
+                is CharacterVS.AddCharacter -> {
+                    testTextView.text = it.charactersVM.name
                 }
-                is EpisodesVS.ShowLoader -> {
+                is CharacterVS.ShowLoader -> {
                     if (it.showLoader) {
                         pbPost.visibility = View.VISIBLE
-                        recyclerView.visibility = View.INVISIBLE
+                        testTextView.visibility = View.INVISIBLE
                     } else {
                         pbPost.visibility = View.INVISIBLE
-                        recyclerView.visibility = View.VISIBLE
+                        testTextView.visibility = View.VISIBLE
                     }
                     Log.i("ShowLoader", it.showLoader.toString())
                 }
-                is EpisodesVS.Error -> {
+                is CharacterVS.Error -> {
                     it.message?.let { message -> Log.i("Error", message) }
                 }
             }
         })
     }
-
 
 }

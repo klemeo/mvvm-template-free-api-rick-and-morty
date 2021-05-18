@@ -1,45 +1,33 @@
 package ru.android.rickandmortymvvm.presentation.model.mapper
 
 import ru.android.rickandmortymvvm.base.mapper.Mapper
-import ru.android.rickandmortymvvm.data.model.character_body.CharacterResponsesBody
+import ru.android.rickandmortymvvm.data.model.character_body.CharacterResultResponsesBody
 import ru.android.rickandmortymvvm.presentation.model.character.*
 
-class CharacterVMMapper : Mapper<CharacterResponsesBody, CharacterBody> {
+class CharacterVMMapper : Mapper<CharacterResultResponsesBody, CharacterResultBody> {
 
-    override fun map(origin: CharacterResponsesBody) = CharacterBody(
-        info = origin.info.let { info ->
-            InfoBody(
-                count = info?.count,
-                next = info?.next,
-                pages = info?.pages,
-                prev = info?.prev,
+    override fun map(origin: CharacterResultResponsesBody) = CharacterResultBody(
+        created = origin.created,
+        episode = origin.episode,
+        gender = origin.gender,
+        id = origin.id,
+        image = origin.image,
+        location = origin.location.let { location ->
+            LocationBody(
+                name = location?.name,
+                url = location?.url
             )
         },
-        results = origin.results?.map { result ->
-            ResultBody(
-                created = result.created,
-                episode = result.episode,
-                gender = result.gender,
-                id = result.id,
-                image = result.image,
-                location = result.location.let { location ->
-                    LocationBody(
-                        name = location?.name,
-                        url = location?.url
-                    )
-                },
-                name = result.name,
-                origin = result.origin.let { origin ->
-                    OriginBody(
-                        name = origin?.name,
-                        url = origin?.url
-                    )
-                },
-                species = result.species,
-                status = result.status,
-                type = result.type,
-                url = result.url,
+        name = origin.name,
+        origin = origin.origin.let {
+            OriginBody(
+                name = it?.name,
+                url = it?.url
             )
-        }
+        },
+        species = origin.species,
+        status = origin.status,
+        type = origin.type,
+        url = origin.url,
     )
 }

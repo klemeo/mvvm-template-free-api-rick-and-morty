@@ -1,6 +1,6 @@
-package ru.android.rickandmortymvvm.presentation.model.episode
+package ru.android.rickandmortymvvm.data.model.episode_body
 
-data class ResultBody(
+data class EpisodeResultResponsesBody(
     val airDate: String?,
     val characters: List<String>?,
     val created: String?,

@@ -1,4 +1,4 @@
-package ru.android.rickandmortymvvm.presentation.character
+package ru.android.rickandmortymvvm.presentation.characters
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +10,7 @@ import ru.android.rickandmortymvvm.base.platform.BaseViewModel
 import ru.android.rickandmortymvvm.base.utils.io
 import ru.android.rickandmortymvvm.base.utils.ui
 import ru.android.rickandmortymvvm.domain.interactor.CharactersInteractor
-import ru.android.rickandmortymvvm.presentation.model.mapper.CharacterVMMapper
+import ru.android.rickandmortymvvm.presentation.model.mapper.CharactersVMMapper
 import ru.android.rickandmortymvvm.presentation.state.CharactersVS
 
 class CharactersViewModel(
@@ -20,7 +20,7 @@ class CharactersViewModel(
     val viewCharactersState: LiveData<CharactersVS> get() = mViewCharactersState
     private val mViewCharactersState = MutableLiveData<CharactersVS>()
 
-    private val charactersMapper by lazy { CharacterVMMapper() }
+    private val charactersMapper by lazy { CharactersVMMapper() }
 
     fun getCharacters() {
         if (viewCharactersState.value == null) {

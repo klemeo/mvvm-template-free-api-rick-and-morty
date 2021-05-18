@@ -1,20 +1,21 @@
-package ru.android.rickandmortymvvm.presentation.character
+package ru.android.rickandmortymvvm.presentation.characters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_character.view.*
 import ru.android.rickandmortymvvm.R
-import ru.android.rickandmortymvvm.presentation.model.character.ResultBody
-import ru.notice.noticemartstest.base.setImageFitPlaceholderWithGlide
+import ru.android.rickandmortymvvm.presentation.model.character.CharacterResultBody
+import ru.android.rickandmortymvvm.base.setImageFitPlaceholderWithGlide
 
 class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
 
-    private val mList: MutableList<ResultBody> = mutableListOf()
+    private val mList: MutableList<CharacterResultBody> = mutableListOf()
     private var mListener: Listener? = null
 
-    fun add(lstResultVM: List<ResultBody>) {
+    fun add(lstResultVM: List<CharacterResultBody>) {
         mList.addAll(lstResultVM)
         notifyItemInserted(this.itemCount)
     }
@@ -39,7 +40,7 @@ class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(result: ResultBody) {
+        fun bind(result: CharacterResultBody) {
             itemView.imagePreview.setImageFitPlaceholderWithGlide(
                 imageUrl = result.image,
                 isRounded = false
@@ -48,7 +49,11 @@ class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
             itemView.textStatus.text = result.status
             itemView.textLocation.text = result.origin?.name
 
-
+            when (result.status) {
+                "Alive" -> itemView.textStatus.setTextColor(Color.parseColor("#4CAF50"))
+                "Dead" -> itemView.textStatus.setTextColor(Color.parseColor("#F44336"))
+                else -> itemView.textStatus.setTextColor(Color.parseColor("#B89DA8"))
+            }
             itemView.cvPostItem.setOnClickListener {
                 mListener?.onPostClicked(result.id ?: 1)
             }

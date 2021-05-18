@@ -1,4 +1,4 @@
-package ru.android.rickandmortymvvm.presentation.location
+package ru.android.rickandmortymvvm.presentation.locations
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +10,7 @@ import ru.android.rickandmortymvvm.base.platform.BaseViewModel
 import ru.android.rickandmortymvvm.base.utils.io
 import ru.android.rickandmortymvvm.base.utils.ui
 import ru.android.rickandmortymvvm.domain.interactor.LocationsInteractor
-import ru.android.rickandmortymvvm.presentation.model.mapper.LocationVMMapper
+import ru.android.rickandmortymvvm.presentation.model.mapper.LocationsVMMapper
 import ru.android.rickandmortymvvm.presentation.state.LocationsVS
 
 class LocationsViewModel(
@@ -20,7 +20,7 @@ class LocationsViewModel(
     val viewLocationsState: LiveData<LocationsVS> get() = mViewLocationsState
     private val mViewLocationsState = MutableLiveData<LocationsVS>()
 
-    private val locationVMMapper by lazy { LocationVMMapper() }
+    private val locationVMMapper by lazy { LocationsVMMapper() }
 
     fun getLocations() {
         if (viewLocationsState.value == null) {
@@ -47,6 +47,4 @@ class LocationsViewModel(
             }
         }
     }
-
-
 }

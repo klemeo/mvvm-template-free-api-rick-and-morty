@@ -3,7 +3,7 @@ package ru.android.rickandmortymvvm.data.model.location_responses
 
 import com.google.gson.annotations.SerializedName
 
-data class ResultResponsesBodyData(
+data class LocationResultResponsesBodyData(
     @SerializedName("created")
     val created: String?,
     @SerializedName("dimension")

@@ -7,27 +7,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_characters.*
+import androidx.navigation.fragment.navArgs
+import kotlinx.android.synthetic.main.fragment_location.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.android.rickandmortymvvm.R
-import ru.android.rickandmortymvvm.databinding.FragmentLocationsBinding
-import ru.android.rickandmortymvvm.presentation.state.LocationsVS
+import ru.android.rickandmortymvvm.databinding.FragmentLocationBinding
+import ru.android.rickandmortymvvm.presentation.state.LocationVS
 
-class LocationsFragment : Fragment() {
+class LocationFragment : Fragment() {
 
-    private val viewModel: LocationsViewModel by viewModel()
-    private val locationsAdapter = LocationsAdapter()
+    private val viewModel: LocationViewModel by viewModel()
+
+    private val navArgs by navArgs<LocationFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = DataBindingUtil.inflate<FragmentLocationsBinding>(
+        val binding = DataBindingUtil.inflate<FragmentLocationBinding>(
             inflater,
-            R.layout.fragment_locations,
+            R.layout.fragment_location,
             container,
             false
         )
@@ -41,37 +41,29 @@ class LocationsFragment : Fragment() {
     }
 
     private fun initView() {
-        viewModel.getLocations()
-        with(recyclerView) {
-            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            adapter = locationsAdapter
-        }
+        viewModel.getLocation(navArgs.id)
         buttonBack.setOnClickListener {
             activity?.onBackPressed()
         }
     }
 
     private fun observeViewModel() {
-        viewModel.viewLocationsState.observe(viewLifecycleOwner, {
+        viewModel.viewLocationState.observe(viewLifecycleOwner, {
             when (it) {
-                is LocationsVS.AddLocations -> {
-                    it.locationsVM.results.let { character ->
-                        if (character != null) {
-                            locationsAdapter.add(character)
-                        }
-                    }
+                is LocationVS.AddLocation -> {
+                    testTextView.text = it.locationsVM.name
                 }
-                is LocationsVS.ShowLoader -> {
+                is LocationVS.ShowLoader -> {
                     if (it.showLoader) {
                         pbPost.visibility = View.VISIBLE
-                        recyclerView.visibility = View.INVISIBLE
+                        testTextView.visibility = View.INVISIBLE
                     } else {
                         pbPost.visibility = View.INVISIBLE
-                        recyclerView.visibility = View.VISIBLE
+                        testTextView.visibility = View.VISIBLE
                     }
                     Log.i("ShowLoader", it.showLoader.toString())
                 }
-                is LocationsVS.Error -> {
+                is LocationVS.Error -> {
                     it.message?.let { message -> Log.i("Error", message) }
                 }
             }
