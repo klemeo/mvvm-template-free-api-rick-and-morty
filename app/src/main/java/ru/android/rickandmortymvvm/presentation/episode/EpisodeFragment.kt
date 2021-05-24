@@ -51,15 +51,21 @@ class EpisodeFragment : Fragment() {
         viewModel.viewEpisodeState.observe(viewLifecycleOwner, {
             when (it) {
                 is EpisodeVS.AddEpisode -> {
-                    testTextView.text = it.episodesVM.episode
+                    idTextView.text = it.episodesVM.id.toString()
+                    nameTextView.text = it.episodesVM.name
+                    urlTextView.text = it.episodesVM.url
+                    episodeTextView.text = it.episodesVM.episode
+                    createdTextView.text = it.episodesVM.created
+                    airDateTextView.text = it.episodesVM.airDate
+                    charactersTextView.text  = it.episodesVM.characters.toString()
                 }
                 is EpisodeVS.ShowLoader -> {
                     if (it.showLoader) {
                         pbPost.visibility = View.VISIBLE
-                        testTextView.visibility = View.INVISIBLE
+                        linearLayout.visibility = View.INVISIBLE
                     } else {
                         pbPost.visibility = View.INVISIBLE
-                        testTextView.visibility = View.VISIBLE
+                        linearLayout.visibility = View.VISIBLE
                     }
                     Log.i("ShowLoader", it.showLoader.toString())
                 }
