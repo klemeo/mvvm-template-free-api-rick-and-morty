@@ -1,5 +1,6 @@
 package ru.android.rickandmortymvvm.presentation.character
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_character.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.android.rickandmortymvvm.R
+import ru.android.rickandmortymvvm.base.setImageFitPlaceholderWithGlide
 import ru.android.rickandmortymvvm.databinding.FragmentCharacterBinding
 import ru.android.rickandmortymvvm.presentation.state.CharacterVS
 
@@ -51,15 +53,27 @@ class CharacterFragment : Fragment() {
         viewModel.viewCharacterState.observe(viewLifecycleOwner, {
             when (it) {
                 is CharacterVS.AddCharacter -> {
-                    testTextView.text = it.charactersVM.name
+                    imagePreview.setImageFitPlaceholderWithGlide(
+                        imageUrl = it.charactersVM.image,
+                        isRounded = false
+                    )
+                    textName.text = it.charactersVM.name
+                    textStatus.text = it.charactersVM.status
+                    textLocation.text = it.charactersVM.origin?.name
+
+                    when (it.charactersVM.status) {
+                        "Alive" -> textStatus.setTextColor(Color.parseColor("#4CAF50"))
+                        "Dead" -> textStatus.setTextColor(Color.parseColor("#F44336"))
+                        else -> textStatus.setTextColor(Color.parseColor("#B89DA8"))
+                    }
                 }
                 is CharacterVS.ShowLoader -> {
                     if (it.showLoader) {
                         pbPost.visibility = View.VISIBLE
-                        testTextView.visibility = View.INVISIBLE
+                        cvPostItem.visibility = View.INVISIBLE
                     } else {
                         pbPost.visibility = View.INVISIBLE
-                        testTextView.visibility = View.VISIBLE
+                        cvPostItem.visibility = View.VISIBLE
                     }
                     Log.i("ShowLoader", it.showLoader.toString())
                 }
