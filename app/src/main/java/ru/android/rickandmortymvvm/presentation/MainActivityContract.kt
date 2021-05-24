@@ -1,14 +1,20 @@
 package ru.android.rickandmortymvvm.presentation
 
-interface MainActivityContract : CharactersScreen, CharacterScreen, LocationsScreen, LocationScreen,
+interface MainActivityContract : CharactersScreen, CharacterScreenOne, CharacterScreenTwo,
+    LocationsScreen,
+    LocationScreen,
     EpisodesScreen, EpisodeScreenOne, EpisodeScreenTwo
 
 interface CharactersScreen {
     fun openCharactersScreen()
 }
 
-interface CharacterScreen {
-    fun openCharacterScreen(id: Int)
+interface CharacterScreenOne {
+    fun openCharacterScreenOne(id: Int)
+}
+
+interface CharacterScreenTwo {
+    fun openCharacterScreenTwo(id: Int)
 }
 
 interface LocationsScreen {

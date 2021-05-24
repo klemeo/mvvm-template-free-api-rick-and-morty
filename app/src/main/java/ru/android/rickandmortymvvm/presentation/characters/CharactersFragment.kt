@@ -15,19 +15,19 @@ import ru.android.rickandmortymvvm.R
 import ru.android.rickandmortymvvm.databinding.FragmentCharactersBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.android.rickandmortymvvm.base.FragmentListenerUtils
-import ru.android.rickandmortymvvm.presentation.CharacterScreen
+import ru.android.rickandmortymvvm.presentation.CharacterScreenOne
 import ru.android.rickandmortymvvm.presentation.state.CharactersVS
 
 class CharactersFragment : Fragment(), CharactersAdapter.Listener {
 
     private val viewModel: CharactersViewModel by viewModel()
     private val charactersAdapter = CharactersAdapter()
-    private lateinit var characterListener: CharacterScreen
+    private lateinit var characterListener: CharacterScreenOne
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         characterListener =
-            FragmentListenerUtils.getFragmentListener(this, CharacterScreen::class.java)
+            FragmentListenerUtils.getFragmentListener(this, CharacterScreenOne::class.java)
     }
 
     override fun onCreateView(
@@ -90,7 +90,7 @@ class CharactersFragment : Fragment(), CharactersAdapter.Listener {
     }
 
     override fun onPostClicked(id: Int) {
-        characterListener.openCharacterScreen(id)
+        characterListener.openCharacterScreenOne(id)
     }
 
 

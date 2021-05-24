@@ -1,5 +1,6 @@
 package ru.android.rickandmortymvvm.presentation.episode
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,17 +9,34 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.fragment_episode.*
+import kotlinx.android.synthetic.main.fragment_episode.buttonBack
+import kotlinx.android.synthetic.main.fragment_episode.linearLayout
+import kotlinx.android.synthetic.main.fragment_episode.pbPost
+import kotlinx.android.synthetic.main.fragment_episode.recyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.android.rickandmortymvvm.R
+import ru.android.rickandmortymvvm.base.FragmentListenerUtils
 import ru.android.rickandmortymvvm.databinding.FragmentEpisodeBinding
+import ru.android.rickandmortymvvm.presentation.CharacterScreenTwo
 import ru.android.rickandmortymvvm.presentation.state.EpisodeVS
 
-class EpisodeFragment : Fragment() {
+class EpisodeFragment : Fragment(), CharacterNumberAdapter.Listener {
 
     private val viewModel: EpisodeViewModel by viewModel()
 
+    private val characterAdapter = CharacterNumberAdapter()
+
+    private lateinit var characterListener: CharacterScreenTwo
+
     private val navArgs by navArgs<EpisodeFragmentArgs>()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        characterListener =
+            FragmentListenerUtils.getFragmentListener(this, CharacterScreenTwo::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +59,12 @@ class EpisodeFragment : Fragment() {
     }
 
     private fun initView() {
+        characterAdapter.setListener(this)
         viewModel.getEpisode(navArgs.id)
+        with(recyclerView) {
+            layoutManager = GridLayoutManager(requireContext(), 5)
+            adapter = characterAdapter
+        }
         buttonBack.setOnClickListener {
             activity?.onBackPressed()
         }
@@ -57,7 +80,7 @@ class EpisodeFragment : Fragment() {
                     episodeTextView.text = it.episodesVM.episode
                     createdTextView.text = it.episodesVM.created
                     airDateTextView.text = it.episodesVM.airDate
-                    charactersTextView.text  = it.episodesVM.characters.toString()
+                    it.episodesVM.characters?.let { character -> characterAdapter.add(character) }
                 }
                 is EpisodeVS.ShowLoader -> {
                     if (it.showLoader) {
@@ -74,6 +97,10 @@ class EpisodeFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onPostClicked(id: Int) {
+        characterListener.openCharacterScreenTwo(id)
     }
 
 }

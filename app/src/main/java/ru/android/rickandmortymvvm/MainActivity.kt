@@ -6,6 +6,7 @@ import androidx.navigation.findNavController
 import ru.android.rickandmortymvvm.presentation.MainActivityContract
 import ru.android.rickandmortymvvm.presentation.character.CharacterFragmentDirections
 import ru.android.rickandmortymvvm.presentation.characters.CharactersFragmentDirections
+import ru.android.rickandmortymvvm.presentation.episode.EpisodeFragmentDirections
 import ru.android.rickandmortymvvm.presentation.episodes.EpisodesFragmentDirections
 import ru.android.rickandmortymvvm.presentation.home.HomeFragmentDirections
 import ru.android.rickandmortymvvm.presentation.locations.LocationsFragmentDirections
@@ -27,9 +28,15 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
         )
     }
 
-    override fun openCharacterScreen(id: Int) {
+    override fun openCharacterScreenOne(id: Int) {
         navController.navigate(
             CharactersFragmentDirections.actionCharactersFragmentToCharacterFragment(id)
+        )
+    }
+
+    override fun openCharacterScreenTwo(id: Int) {
+        navController.navigate(
+            EpisodeFragmentDirections.actionEpisodeFragmentToCharacterFragment(id)
         )
     }
 
