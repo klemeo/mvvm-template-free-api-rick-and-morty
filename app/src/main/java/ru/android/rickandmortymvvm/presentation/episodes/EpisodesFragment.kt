@@ -15,19 +15,19 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.android.rickandmortymvvm.R
 import ru.android.rickandmortymvvm.base.FragmentListenerUtils
 import ru.android.rickandmortymvvm.databinding.FragmentEpisodesBinding
-import ru.android.rickandmortymvvm.presentation.EpisodeScreen
+import ru.android.rickandmortymvvm.presentation.EpisodeScreenOne
 import ru.android.rickandmortymvvm.presentation.state.EpisodesVS
 
 class EpisodesFragment : Fragment(), EpisodesAdapter.Listener {
 
     private val viewModel: EpisodesViewModel by viewModel()
     private val episodesAdapter = EpisodesAdapter()
-    private lateinit var episodeListener: EpisodeScreen
+    private lateinit var episodeListener: EpisodeScreenOne
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         episodeListener =
-            FragmentListenerUtils.getFragmentListener(this, EpisodeScreen::class.java)
+            FragmentListenerUtils.getFragmentListener(this, EpisodeScreenOne::class.java)
     }
 
     override fun onCreateView(
@@ -90,7 +90,7 @@ class EpisodesFragment : Fragment(), EpisodesAdapter.Listener {
     }
 
     override fun onPostClicked(id: Int) {
-        episodeListener.openEpisodeScreen(id)
+        episodeListener.openEpisodeScreenOne(id)
     }
 
 }

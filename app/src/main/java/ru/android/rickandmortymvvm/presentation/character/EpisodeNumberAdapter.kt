@@ -39,7 +39,12 @@ class EpisodeNumberAdapter: RecyclerView.Adapter<EpisodeNumberAdapter.ViewHolder
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(result: String) {
+
             itemView.numberView.text = result.replace("https://rickandmortyapi.com/api/episode/", "")
+
+            itemView.numberCardItem.setOnClickListener {
+                mListener?.onPostClicked(result.replace("https://rickandmortyapi.com/api/episode/", "").toInt())
+            }
         }
     }
 }

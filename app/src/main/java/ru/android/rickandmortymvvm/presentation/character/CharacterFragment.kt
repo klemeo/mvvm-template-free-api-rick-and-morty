@@ -1,5 +1,6 @@
 package ru.android.rickandmortymvvm.presentation.character
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -16,17 +17,27 @@ import kotlinx.android.synthetic.main.fragment_character.pbPost
 import kotlinx.android.synthetic.main.fragment_character.recyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.android.rickandmortymvvm.R
+import ru.android.rickandmortymvvm.base.FragmentListenerUtils
 import ru.android.rickandmortymvvm.base.setImageFitPlaceholderWithGlide
 import ru.android.rickandmortymvvm.databinding.FragmentCharacterBinding
+import ru.android.rickandmortymvvm.presentation.EpisodeScreenTwo
 import ru.android.rickandmortymvvm.presentation.state.CharacterVS
 
-class CharacterFragment : Fragment() {
+class CharacterFragment : Fragment(), EpisodeNumberAdapter.Listener {
 
     private val viewModel: CharacterViewModel by viewModel()
 
     private val episodeAdapter = EpisodeNumberAdapter()
 
+    private lateinit var episodeListener: EpisodeScreenTwo
+
     private val navArgs by navArgs<CharacterFragmentArgs>()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        episodeListener =
+            FragmentListenerUtils.getFragmentListener(this, EpisodeScreenTwo::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +60,7 @@ class CharacterFragment : Fragment() {
     }
 
     private fun initView() {
+        episodeAdapter.setListener(this)
         viewModel.getCharacter(navArgs.id)
         with(recyclerView) {
             layoutManager = GridLayoutManager(requireContext(), 5)
@@ -93,6 +105,10 @@ class CharacterFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onPostClicked(id: Int) {
+        episodeListener.openEpisodeScreenTwo(id)
     }
 
 }

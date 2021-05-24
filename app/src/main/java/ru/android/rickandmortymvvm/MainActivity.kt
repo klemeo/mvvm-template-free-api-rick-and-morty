@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.findNavController
 import ru.android.rickandmortymvvm.presentation.MainActivityContract
+import ru.android.rickandmortymvvm.presentation.character.CharacterFragmentDirections
 import ru.android.rickandmortymvvm.presentation.characters.CharactersFragmentDirections
 import ru.android.rickandmortymvvm.presentation.episodes.EpisodesFragmentDirections
 import ru.android.rickandmortymvvm.presentation.home.HomeFragmentDirections
@@ -50,9 +51,15 @@ class MainActivity : AppCompatActivity(), MainActivityContract {
         )
     }
 
-    override fun openEpisodeScreen(id: Int) {
+    override fun openEpisodeScreenOne(id: Int) {
         navController.navigate(
             EpisodesFragmentDirections.actionEpisodesFragmentToEpisodeFragment(id)
+        )
+    }
+
+    override fun openEpisodeScreenTwo(id: Int) {
+        navController.navigate(
+            CharacterFragmentDirections.actionCharacterFragmentToEpisodeFragment(id)
         )
     }
 
