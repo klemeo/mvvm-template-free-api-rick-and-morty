@@ -9,7 +9,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.fragment_character.*
+import kotlinx.android.synthetic.main.fragment_character.buttonBack
+import kotlinx.android.synthetic.main.fragment_character.pbPost
+import kotlinx.android.synthetic.main.fragment_character.recyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.android.rickandmortymvvm.R
 import ru.android.rickandmortymvvm.base.setImageFitPlaceholderWithGlide
@@ -19,6 +23,8 @@ import ru.android.rickandmortymvvm.presentation.state.CharacterVS
 class CharacterFragment : Fragment() {
 
     private val viewModel: CharacterViewModel by viewModel()
+
+    private val episodeAdapter = EpisodeNumberAdapter()
 
     private val navArgs by navArgs<CharacterFragmentArgs>()
 
@@ -44,6 +50,10 @@ class CharacterFragment : Fragment() {
 
     private fun initView() {
         viewModel.getCharacter(navArgs.id)
+        with(recyclerView) {
+            layoutManager = GridLayoutManager(requireContext(), 5)
+            adapter = episodeAdapter
+        }
         buttonBack.setOnClickListener {
             activity?.onBackPressed()
         }
@@ -66,6 +76,7 @@ class CharacterFragment : Fragment() {
                         "Dead" -> textStatus.setTextColor(Color.parseColor("#F44336"))
                         else -> textStatus.setTextColor(Color.parseColor("#B89DA8"))
                     }
+                    it.charactersVM.episode?.let { episode -> episodeAdapter.add(episode) }
                 }
                 is CharacterVS.ShowLoader -> {
                     if (it.showLoader) {
