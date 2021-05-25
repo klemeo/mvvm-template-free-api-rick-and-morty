@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_character.view.*
 import ru.android.rickandmortymvvm.R
 import ru.android.rickandmortymvvm.presentation.model.character.CharacterResultBody
-import ru.android.rickandmortymvvm.base.setImageFitPlaceholderWithGlide
 
 class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
 
@@ -41,10 +41,11 @@ class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(result: CharacterResultBody) {
-            itemView.imagePreview.setImageFitPlaceholderWithGlide(
-                imageUrl = result.image,
-                isRounded = false
-            )
+
+            Glide.with(itemView)
+                .load(result.image)
+                .into(itemView.imagePreview)
+
             itemView.textName.text = result.name
             itemView.textStatus.text = result.status
             itemView.textLocation.text = result.origin?.name

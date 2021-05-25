@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_character.*
 import kotlinx.android.synthetic.main.fragment_character.buttonBack
 import kotlinx.android.synthetic.main.fragment_character.pbPost
@@ -18,7 +19,6 @@ import kotlinx.android.synthetic.main.fragment_character.recyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.android.rickandmortymvvm.R
 import ru.android.rickandmortymvvm.base.FragmentListenerUtils
-import ru.android.rickandmortymvvm.base.setImageFitPlaceholderWithGlide
 import ru.android.rickandmortymvvm.databinding.FragmentCharacterBinding
 import ru.android.rickandmortymvvm.presentation.EpisodeScreenTwo
 import ru.android.rickandmortymvvm.presentation.state.CharacterVS
@@ -75,10 +75,13 @@ class CharacterFragment : Fragment(), EpisodeNumberAdapter.Listener {
         viewModel.viewCharacterState.observe(viewLifecycleOwner, {
             when (it) {
                 is CharacterVS.AddCharacter -> {
-                    imagePreview.setImageFitPlaceholderWithGlide(
-                        imageUrl = it.charactersVM.image,
-                        isRounded = false
-                    )
+
+                    context?.let { context ->
+                        Glide.with(context)
+                            .load(it.charactersVM.image)
+                            .into(imagePreview)
+                    }
+
                     textName.text = it.charactersVM.name
                     textStatus.text = it.charactersVM.status
                     textLocation.text = it.charactersVM.origin?.name
