@@ -15,19 +15,19 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.android.rickandmortymvvm.R
 import ru.android.rickandmortymvvm.base.FragmentListenerUtils
 import ru.android.rickandmortymvvm.databinding.FragmentLocationsBinding
-import ru.android.rickandmortymvvm.presentation.LocationScreen
+import ru.android.rickandmortymvvm.presentation.LocationScreenOne
 import ru.android.rickandmortymvvm.presentation.state.LocationsVS
 
 class LocationsFragment : Fragment(), LocationsAdapter.Listener {
 
     private val viewModel: LocationsViewModel by viewModel()
     private val locationsAdapter = LocationsAdapter()
-    private lateinit var locationListener: LocationScreen
+    private lateinit var locationListener: LocationScreenOne
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         locationListener =
-            FragmentListenerUtils.getFragmentListener(this, LocationScreen::class.java)
+            FragmentListenerUtils.getFragmentListener(this, LocationScreenOne::class.java)
     }
 
     override fun onCreateView(
@@ -90,7 +90,7 @@ class LocationsFragment : Fragment(), LocationsAdapter.Listener {
     }
 
     override fun onPostClicked(id: Int) {
-        locationListener.openLocationScreen(id)
+        locationListener.openLocationScreenOne(id)
     }
 
 }
