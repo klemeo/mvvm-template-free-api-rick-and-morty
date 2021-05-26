@@ -16,6 +16,7 @@ class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
     private var mListener: Listener? = null
 
     fun add(lstResultVM: List<CharacterResultBody>) {
+        mList.clear()
         mList.addAll(lstResultVM)
         notifyItemInserted(this.itemCount)
     }

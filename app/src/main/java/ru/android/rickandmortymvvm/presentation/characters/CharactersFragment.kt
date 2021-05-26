@@ -24,6 +24,10 @@ class CharactersFragment : Fragment(), CharactersAdapter.Listener {
     private val charactersAdapter = CharactersAdapter()
     private lateinit var characterListener: CharacterScreenOne
 
+    private var prevPage: Int? = null
+
+    private var nextPage: Int? = null
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         characterListener =
@@ -57,9 +61,27 @@ class CharactersFragment : Fragment(), CharactersAdapter.Listener {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             adapter = charactersAdapter
         }
+
         buttonBack.setOnClickListener {
             activity?.onBackPressed()
         }
+
+        nextButton.setOnClickListener {
+            clearRecyclerView()
+            viewModel.getCharacters(nextPage)
+        }
+
+        backButton.setOnClickListener {
+            clearRecyclerView()
+            viewModel.getCharacters(prevPage)
+        }
+
+    }
+
+    private fun clearRecyclerView() {
+        recyclerView.removeAllViewsInLayout()
+        recyclerView.removeAllViews()
+        recyclerView.recycledViewPool.clear()
     }
 
     private fun observeViewModel() {
@@ -71,6 +93,14 @@ class CharactersFragment : Fragment(), CharactersAdapter.Listener {
                             charactersAdapter.add(character)
                         }
                     }
+                    nextPage = it.charactersVM.info?.next?.replace(
+                        "https://rickandmortyapi.com/api/character?page=",
+                        ""
+                    )?.toInt()
+                    prevPage =
+                        if (it.charactersVM.info?.prev != null) it.charactersVM.info.prev.toString()
+                            .replace("https://rickandmortyapi.com/api/character?page=", "")
+                            .toInt() else null
                 }
                 is CharactersVS.ShowLoader -> {
                     if (it.showLoader) {
