@@ -25,8 +25,8 @@ class ApiRepositoryImpl(
     private val locationDataMapper by lazy { LocationDataMapper() }
 
 
-    override fun getCharacters(): Flow<CharacterResponsesBody> =
-        apiResponseDataSource.getCharacters().map {
+    override fun getCharacters(page: Int?): Flow<CharacterResponsesBody> =
+        apiResponseDataSource.getCharacters(page).map {
             charactersDataMapper.map(it)
         }
 

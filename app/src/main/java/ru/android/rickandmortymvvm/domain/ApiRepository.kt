@@ -10,7 +10,7 @@ import ru.android.rickandmortymvvm.data.model.location_body.LocationResultRespon
 
 interface ApiRepository {
 
-    fun getCharacters(): Flow<CharacterResponsesBody>
+    fun getCharacters(page: Int?): Flow<CharacterResponsesBody>
 
     fun getCharacter(id: Int): Flow<CharacterResultResponsesBody>
 

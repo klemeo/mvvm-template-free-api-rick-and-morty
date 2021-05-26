@@ -11,7 +11,9 @@ import ru.android.rickandmortymvvm.data.model.location_responses.LocationResultR
 interface ApiServices {
 
     @GET("character")
-    suspend fun getCharacters(): CharacterResponsesBodyData
+    suspend fun getCharacters(
+        @Query("page") page: Int? = null
+    ): CharacterResponsesBodyData
 
     @GET("character/{id}")
     suspend fun getCharacter(

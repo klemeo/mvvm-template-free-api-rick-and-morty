@@ -11,9 +11,9 @@ import ru.android.rickandmortymvvm.data.model.location_responses.LocationResultR
 
 class PostResponseDataSource {
 
-    fun getCharacters(): Flow<CharacterResponsesBodyData> = flow {
+    fun getCharacters(page: Int?): Flow<CharacterResponsesBodyData> = flow {
         emit(
-            PostApiClient.getApiClient().getCharacters()
+            PostApiClient.getApiClient().getCharacters(page)
         )
     }
 

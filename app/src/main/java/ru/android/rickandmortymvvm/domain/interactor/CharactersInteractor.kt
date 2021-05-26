@@ -7,10 +7,14 @@ import ru.android.rickandmortymvvm.domain.ApiRepository
 
 class CharactersInteractor(
     private val apiRepository: ApiRepository
-) : Interactor<Interactor.None, Flow<CharacterResponsesBody>> {
+) : Interactor<CharactersInteractor.Params, Flow<CharacterResponsesBody>> {
 
-    override fun execute(params: Interactor.None): Flow<CharacterResponsesBody> {
-        return apiRepository.getCharacters()
+    override fun execute(params: Params): Flow<CharacterResponsesBody> {
+        return apiRepository.getCharacters(params.page)
     }
+
+    data class Params(
+        val page: Int?
+    )
 
 }

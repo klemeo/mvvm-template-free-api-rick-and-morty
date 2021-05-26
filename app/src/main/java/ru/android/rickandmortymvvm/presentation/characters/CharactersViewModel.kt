@@ -22,14 +22,16 @@ class CharactersViewModel(
 
     private val charactersMapper by lazy { CharactersVMMapper() }
 
-    fun getCharacters() {
+    fun getCharacters(page: Int? = null) {
         if (viewCharactersState.value == null) {
             viewModelScope.launch {
                 mViewCharactersState.value = CharactersVS.ShowLoader(true)
                 try {
                     io {
                         charactersInteractor.execute(
-                            Interactor.None
+                            CharactersInteractor.Params(
+                                page = page
+                            )
                         )
                             .collect {
                                 ui {
