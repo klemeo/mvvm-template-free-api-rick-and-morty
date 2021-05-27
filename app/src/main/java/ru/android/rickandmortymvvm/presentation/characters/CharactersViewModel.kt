@@ -16,8 +16,8 @@ class CharactersViewModel(
     private val charactersInteractor: CharactersInteractor
 ) : BaseViewModel() {
 
-    val viewCharactersState: LiveData<CharactersVS?> get() = mViewCharactersState
-    private val mViewCharactersState = MutableLiveData<CharactersVS?>()
+    val viewCharactersState: LiveData<CharactersVS> get() = mViewCharactersState
+    private val mViewCharactersState = MutableLiveData<CharactersVS>()
 
     private val charactersMapper by lazy { CharactersVMMapper() }
 

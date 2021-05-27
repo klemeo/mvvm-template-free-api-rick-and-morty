@@ -14,8 +14,9 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.ViewHolder>() {
     private var mListener: Listener? = null
 
     fun add(lstResultVM: List<LocationResultBody>) {
+        mList.clear()
         mList.addAll(lstResultVM)
-        notifyItemInserted(this.itemCount)
+        notifyDataSetChanged()
     }
 
     fun setListener(listener: Listener) {

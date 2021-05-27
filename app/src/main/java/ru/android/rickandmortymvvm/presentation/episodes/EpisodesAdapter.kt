@@ -14,8 +14,9 @@ class EpisodesAdapter : RecyclerView.Adapter<EpisodesAdapter.ViewHolder>() {
     private var mListener: Listener? = null
 
     fun add(lstResultVM: List<EpisodeResultBody>) {
+        mList.clear()
         mList.addAll(lstResultVM)
-        notifyItemInserted(this.itemCount)
+        notifyDataSetChanged()
     }
 
     fun setListener(listener: Listener) {

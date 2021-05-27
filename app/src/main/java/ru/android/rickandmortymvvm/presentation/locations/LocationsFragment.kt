@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_characters.*
+import kotlinx.android.synthetic.main.fragment_locations.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.android.rickandmortymvvm.R
 import ru.android.rickandmortymvvm.base.FragmentListenerUtils
@@ -23,6 +23,10 @@ class LocationsFragment : Fragment(), LocationsAdapter.Listener {
     private val viewModel: LocationsViewModel by viewModel()
     private val locationsAdapter = LocationsAdapter()
     private lateinit var locationListener: LocationScreenOne
+
+    private var prevPage: Int? = null
+
+    private var nextPage: Int? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -60,6 +64,13 @@ class LocationsFragment : Fragment(), LocationsAdapter.Listener {
         buttonBack.setOnClickListener {
             activity?.onBackPressed()
         }
+        nextButton.setOnClickListener {
+            viewModel.getLocations(nextPage)
+        }
+
+        backButton.setOnClickListener {
+            viewModel.getLocations(prevPage)
+        }
     }
 
     private fun observeViewModel() {
@@ -71,6 +82,14 @@ class LocationsFragment : Fragment(), LocationsAdapter.Listener {
                             locationsAdapter.add(character)
                         }
                     }
+                    nextPage = it.locationsVM.info?.next?.replace(
+                        "https://rickandmortyapi.com/api/location?page=",
+                        ""
+                    )?.toInt()
+                    prevPage =
+                        if (it.locationsVM.info?.prev != null) it.locationsVM.info.prev.toString()
+                            .replace("https://rickandmortyapi.com/api/location?page=", "")
+                            .toInt() else null
                 }
                 is LocationsVS.ShowLoader -> {
                     if (it.showLoader) {

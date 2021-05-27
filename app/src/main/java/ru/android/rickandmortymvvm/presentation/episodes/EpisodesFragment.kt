@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_characters.*
+import kotlinx.android.synthetic.main.fragment_episodes.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.android.rickandmortymvvm.R
 import ru.android.rickandmortymvvm.base.FragmentListenerUtils
@@ -23,6 +23,10 @@ class EpisodesFragment : Fragment(), EpisodesAdapter.Listener {
     private val viewModel: EpisodesViewModel by viewModel()
     private val episodesAdapter = EpisodesAdapter()
     private lateinit var episodeListener: EpisodeScreenOne
+
+    private var prevPage: Int? = null
+
+    private var nextPage: Int? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -60,6 +64,13 @@ class EpisodesFragment : Fragment(), EpisodesAdapter.Listener {
         buttonBack.setOnClickListener {
             activity?.onBackPressed()
         }
+        nextButton.setOnClickListener {
+            viewModel.getEpisodes(nextPage)
+        }
+
+        backButton.setOnClickListener {
+            viewModel.getEpisodes(prevPage)
+        }
     }
 
     private fun observeViewModel() {
@@ -71,6 +82,14 @@ class EpisodesFragment : Fragment(), EpisodesAdapter.Listener {
                             episodesAdapter.add(character)
                         }
                     }
+                    nextPage = it.episodesVM.info?.next?.replace(
+                        "https://rickandmortyapi.com/api/episode?page=",
+                        ""
+                    )?.toInt()
+                    prevPage =
+                        if (it.episodesVM.info?.prev != null) it.episodesVM.info.prev.toString()
+                            .replace("https://rickandmortyapi.com/api/episode?page=", "")
+                            .toInt() else null
                 }
                 is EpisodesVS.ShowLoader -> {
                     if (it.showLoader) {
