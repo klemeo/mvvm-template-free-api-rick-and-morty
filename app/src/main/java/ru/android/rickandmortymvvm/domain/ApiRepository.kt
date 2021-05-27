@@ -14,11 +14,11 @@ interface ApiRepository {
 
     fun getCharacter(id: Int): Flow<CharacterResultResponsesBody>
 
-    fun getLocations(): Flow<LocationResponsesBody>
+    fun getLocations(page: Int?): Flow<LocationResponsesBody>
 
     fun getLocation(id: Int): Flow<LocationResultResponsesBody>
 
-    fun getEpisodes(): Flow<EpisodeResponsesBody>
+    fun getEpisodes(page: Int?): Flow<EpisodeResponsesBody>
 
     fun getEpisode(id: Int): Flow<EpisodeResultResponsesBody>
 

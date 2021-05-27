@@ -7,10 +7,14 @@ import ru.android.rickandmortymvvm.domain.ApiRepository
 
 class EpisodesInteractor(
     private val apiRepository: ApiRepository
-) : Interactor<Interactor.None, Flow<EpisodeResponsesBody>> {
+) : Interactor<EpisodesInteractor.Params, Flow<EpisodeResponsesBody>> {
 
-    override fun execute(params: Interactor.None): Flow<EpisodeResponsesBody> {
-        return apiRepository.getEpisodes()
+    override fun execute(params: Params): Flow<EpisodeResponsesBody> {
+        return apiRepository.getEpisodes(params.page)
     }
+
+    data class Params(
+        val page: Int?
+    )
 
 }

@@ -35,8 +35,8 @@ class ApiRepositoryImpl(
             characterDataMapper.map(it)
         }
 
-    override fun getLocations(): Flow<LocationResponsesBody> =
-        apiResponseDataSource.getLocations().map {
+    override fun getLocations(page: Int?): Flow<LocationResponsesBody> =
+        apiResponseDataSource.getLocations(page).map {
             locationsDataMapper.map(it)
         }
 
@@ -45,8 +45,8 @@ class ApiRepositoryImpl(
             locationDataMapper.map(it)
         }
 
-    override fun getEpisodes(): Flow<EpisodeResponsesBody> =
-        apiResponseDataSource.getEpisodes().map {
+    override fun getEpisodes(page: Int?): Flow<EpisodeResponsesBody> =
+        apiResponseDataSource.getEpisodes(page).map {
             episodesDataMapper.map(it)
         }
 

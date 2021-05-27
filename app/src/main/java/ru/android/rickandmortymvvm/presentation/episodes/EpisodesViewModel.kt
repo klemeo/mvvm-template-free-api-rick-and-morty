@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import ru.android.rickandmortymvvm.base.interactor.Interactor
 import ru.android.rickandmortymvvm.base.platform.BaseViewModel
 import ru.android.rickandmortymvvm.base.utils.io
 import ru.android.rickandmortymvvm.base.utils.ui
@@ -22,29 +21,29 @@ class EpisodesViewModel(
 
     private val episodeVMMapper by lazy { EpisodesVMMapper() }
 
-    fun getEpisodes() {
-        if (viewEpisodesState.value == null) {
-            viewModelScope.launch {
-                mViewEpisodesState.value = EpisodesVS.ShowLoader(true)
-                try {
-                    io {
-                        episodesInteractor.execute(
-                            Interactor.None
+    fun getEpisodes(page: Int? = null) {
+        viewModelScope.launch {
+            mViewEpisodesState.value = EpisodesVS.ShowLoader(true)
+            try {
+                io {
+                    episodesInteractor.execute(
+                        EpisodesInteractor.Params(
+                            page = page
                         )
-                            .collect {
-                                ui {
-                                    mViewEpisodesState.value =
-                                        EpisodesVS.AddEpisodes(episodeVMMapper.map(it))
-                                }
+                    )
+                        .collect {
+                            ui {
+                                mViewEpisodesState.value =
+                                    EpisodesVS.AddEpisodes(episodeVMMapper.map(it))
                             }
-                    }
-                } catch (e: Exception) {
-                    ui {
-                        mViewEpisodesState.value = EpisodesVS.Error(e.message)
-                    }
+                        }
                 }
-                mViewEpisodesState.value = EpisodesVS.ShowLoader(false)
+            } catch (e: Exception) {
+                ui {
+                    mViewEpisodesState.value = EpisodesVS.Error(e.message)
+                }
             }
+            mViewEpisodesState.value = EpisodesVS.ShowLoader(false)
         }
     }
 

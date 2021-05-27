@@ -23,9 +23,9 @@ class PostResponseDataSource {
         )
     }
 
-    fun getLocations(): Flow<LocationResponsesBodyData> = flow {
+    fun getLocations(page: Int?): Flow<LocationResponsesBodyData> = flow {
         emit(
-            PostApiClient.getApiClient().getLocations()
+            PostApiClient.getApiClient().getLocations(page)
         )
     }
 
@@ -35,9 +35,9 @@ class PostResponseDataSource {
         )
     }
 
-    fun getEpisodes(): Flow<EpisodeResponsesBodyData> = flow {
+    fun getEpisodes(page: Int?): Flow<EpisodeResponsesBodyData> = flow {
         emit(
-            PostApiClient.getApiClient().getEpisodes()
+            PostApiClient.getApiClient().getEpisodes(page)
         )
     }
 

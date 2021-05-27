@@ -12,7 +12,7 @@ interface ApiServices {
 
     @GET("character")
     suspend fun getCharacters(
-        @Query("page") page: Int? = null
+        @Query("page") page: Int?
     ): CharacterResponsesBodyData
 
     @GET("character/{id}")
@@ -21,7 +21,9 @@ interface ApiServices {
     ): CharacterResultResponsesBodyData
 
     @GET("location")
-    suspend fun getLocations(): LocationResponsesBodyData
+    suspend fun getLocations(
+        @Query("page") page: Int?
+    ): LocationResponsesBodyData
 
     @GET("location/{id}")
     suspend fun getLocation(
@@ -29,7 +31,9 @@ interface ApiServices {
     ): LocationResultResponsesBodyData
 
     @GET("episode")
-    suspend fun getEpisodes(): EpisodeResponsesBodyData
+    suspend fun getEpisodes(
+        @Query("page") page: Int?
+    ): EpisodeResponsesBodyData
 
     @GET("episode/{id}")
     suspend fun getEpisode(

@@ -7,10 +7,14 @@ import ru.android.rickandmortymvvm.domain.ApiRepository
 
 class LocationsInteractor(
     private val apiRepository: ApiRepository
-) : Interactor<Interactor.None, Flow<LocationResponsesBody>> {
+) : Interactor<LocationsInteractor.Params, Flow<LocationResponsesBody>> {
 
-    override fun execute(params: Interactor.None): Flow<LocationResponsesBody> {
-        return apiRepository.getLocations()
+    override fun execute(params: Params): Flow<LocationResponsesBody> {
+        return apiRepository.getLocations(params.page)
     }
+
+    data class Params(
+        val page: Int?
+    )
 
 }
