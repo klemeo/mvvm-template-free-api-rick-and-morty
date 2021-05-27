@@ -67,21 +67,13 @@ class CharactersFragment : Fragment(), CharactersAdapter.Listener {
         }
 
         nextButton.setOnClickListener {
-            clearRecyclerView()
             viewModel.getCharacters(nextPage)
         }
 
         backButton.setOnClickListener {
-            clearRecyclerView()
             viewModel.getCharacters(prevPage)
         }
 
-    }
-
-    private fun clearRecyclerView() {
-        recyclerView.removeAllViewsInLayout()
-        recyclerView.removeAllViews()
-        recyclerView.recycledViewPool.clear()
     }
 
     private fun observeViewModel() {
