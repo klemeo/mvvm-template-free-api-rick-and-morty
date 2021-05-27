@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -62,6 +63,9 @@ class CharactersFragment : Fragment(), CharactersAdapter.Listener {
             adapter = charactersAdapter
         }
 
+        backButton.isGone = true
+        nextButton.isGone = true
+
         buttonBack.setOnClickListener {
             activity?.onBackPressed()
         }
@@ -85,14 +89,24 @@ class CharactersFragment : Fragment(), CharactersAdapter.Listener {
                             charactersAdapter.add(character)
                         }
                     }
-                    nextPage = it.charactersVM.info?.next?.replace(
-                        "https://rickandmortyapi.com/api/character?page=",
-                        ""
-                    )?.toInt()
+                    nextPage =
+                        if (it.charactersVM.info?.next != null) it.charactersVM.info.next.replace(
+                            "https://rickandmortyapi.com/api/character?page=",
+                            ""
+                        ).toInt() else null
+                    when {
+                        nextPage != null -> nextButton.isGone = false
+                        nextPage == null -> nextButton.isGone = true
+                    }
                     prevPage =
                         if (it.charactersVM.info?.prev != null) it.charactersVM.info.prev.toString()
                             .replace("https://rickandmortyapi.com/api/character?page=", "")
                             .toInt() else null
+                    when {
+                        prevPage != null -> backButton.isGone = false
+                        prevPage == null -> backButton.isGone = true
+                    }
+
                 }
                 is CharactersVS.ShowLoader -> {
                     if (it.showLoader) {

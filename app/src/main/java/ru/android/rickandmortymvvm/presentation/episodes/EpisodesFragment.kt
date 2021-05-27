@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -61,6 +62,10 @@ class EpisodesFragment : Fragment(), EpisodesAdapter.Listener {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             adapter = episodesAdapter
         }
+
+        nextButton.isGone = true
+        backButton.isGone = true
+
         buttonBack.setOnClickListener {
             activity?.onBackPressed()
         }
@@ -82,14 +87,23 @@ class EpisodesFragment : Fragment(), EpisodesAdapter.Listener {
                             episodesAdapter.add(character)
                         }
                     }
-                    nextPage = it.episodesVM.info?.next?.replace(
-                        "https://rickandmortyapi.com/api/episode?page=",
-                        ""
-                    )?.toInt()
+                    nextPage =
+                        if (it.episodesVM.info?.next != null) it.episodesVM.info.next.replace(
+                            "https://rickandmortyapi.com/api/episode?page=",
+                            ""
+                        ).toInt() else null
+                    when {
+                        nextPage != null -> nextButton.isGone = false
+                        nextPage == null -> nextButton.isGone = true
+                    }
                     prevPage =
                         if (it.episodesVM.info?.prev != null) it.episodesVM.info.prev.toString()
                             .replace("https://rickandmortyapi.com/api/episode?page=", "")
                             .toInt() else null
+                    when {
+                        prevPage != null -> backButton.isGone = false
+                        prevPage == null -> backButton.isGone = true
+                    }
                 }
                 is EpisodesVS.ShowLoader -> {
                     if (it.showLoader) {

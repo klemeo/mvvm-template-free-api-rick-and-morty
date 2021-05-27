@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -61,6 +62,10 @@ class LocationsFragment : Fragment(), LocationsAdapter.Listener {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             adapter = locationsAdapter
         }
+
+        nextButton.isGone = true
+        backButton.isGone = true
+
         buttonBack.setOnClickListener {
             activity?.onBackPressed()
         }
@@ -82,14 +87,23 @@ class LocationsFragment : Fragment(), LocationsAdapter.Listener {
                             locationsAdapter.add(character)
                         }
                     }
-                    nextPage = it.locationsVM.info?.next?.replace(
-                        "https://rickandmortyapi.com/api/location?page=",
-                        ""
-                    )?.toInt()
+                    nextPage =
+                        if (it.locationsVM.info?.next != null) it.locationsVM.info.next.replace(
+                            "https://rickandmortyapi.com/api/location?page=",
+                            ""
+                        ).toInt() else null
+                    when {
+                        nextPage != null -> nextButton.isGone = false
+                        nextPage == null -> nextButton.isGone = true
+                    }
                     prevPage =
                         if (it.locationsVM.info?.prev != null) it.locationsVM.info.prev.toString()
                             .replace("https://rickandmortyapi.com/api/location?page=", "")
                             .toInt() else null
+                    when {
+                        prevPage != null -> backButton.isGone = false
+                        prevPage == null -> backButton.isGone = true
+                    }
                 }
                 is LocationsVS.ShowLoader -> {
                     if (it.showLoader) {
