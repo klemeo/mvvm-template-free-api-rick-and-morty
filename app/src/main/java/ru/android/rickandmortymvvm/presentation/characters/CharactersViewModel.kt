@@ -23,7 +23,6 @@ class CharactersViewModel(
 
     fun getCharacters(page: Int? = null) {
         viewModelScope.launch {
-            mViewCharactersState.postValue(null)
             mViewCharactersState.value = CharactersVS.ShowLoader(true)
             try {
                 io {
