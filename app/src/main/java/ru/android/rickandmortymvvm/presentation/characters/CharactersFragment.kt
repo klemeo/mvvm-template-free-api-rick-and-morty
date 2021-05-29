@@ -18,6 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.android.rickandmortymvvm.base.FragmentListenerUtils
 import ru.android.rickandmortymvvm.presentation.CharacterScreenOne
 import ru.android.rickandmortymvvm.presentation.state.CharactersVS
+import ru.android.rickandmortymvvm.presentation.utils.pageCharacters
 
 class CharactersFragment : Fragment(), CharactersAdapter.Listener {
 
@@ -90,18 +91,15 @@ class CharactersFragment : Fragment(), CharactersAdapter.Listener {
                         }
                     }
                     nextPage =
-                        if (it.charactersVM.info?.next != null) it.charactersVM.info.next.replace(
-                            "https://rickandmortyapi.com/api/character?page=",
-                            ""
-                        ).toInt() else null
+                        if (it.charactersVM.info?.next != null) it.charactersVM.info.next
+                            .pageCharacters() else null
                     when {
                         nextPage != null -> nextButton.isGone = false
                         nextPage == null -> nextButton.isGone = true
                     }
                     prevPage =
                         if (it.charactersVM.info?.prev != null) it.charactersVM.info.prev.toString()
-                            .replace("https://rickandmortyapi.com/api/character?page=", "")
-                            .toInt() else null
+                            .pageCharacters() else null
                     when {
                         prevPage != null -> backButton.isGone = false
                         prevPage == null -> backButton.isGone = true

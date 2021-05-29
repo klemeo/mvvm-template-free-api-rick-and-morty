@@ -18,6 +18,7 @@ import ru.android.rickandmortymvvm.base.FragmentListenerUtils
 import ru.android.rickandmortymvvm.databinding.FragmentEpisodesBinding
 import ru.android.rickandmortymvvm.presentation.EpisodeScreenOne
 import ru.android.rickandmortymvvm.presentation.state.EpisodesVS
+import ru.android.rickandmortymvvm.presentation.utils.pageEpisodes
 
 class EpisodesFragment : Fragment(), EpisodesAdapter.Listener {
 
@@ -88,18 +89,15 @@ class EpisodesFragment : Fragment(), EpisodesAdapter.Listener {
                         }
                     }
                     nextPage =
-                        if (it.episodesVM.info?.next != null) it.episodesVM.info.next.replace(
-                            "https://rickandmortyapi.com/api/episode?page=",
-                            ""
-                        ).toInt() else null
+                        if (it.episodesVM.info?.next != null) it.episodesVM.info.next
+                            .pageEpisodes() else null
                     when {
                         nextPage != null -> nextButton.isGone = false
                         nextPage == null -> nextButton.isGone = true
                     }
                     prevPage =
                         if (it.episodesVM.info?.prev != null) it.episodesVM.info.prev.toString()
-                            .replace("https://rickandmortyapi.com/api/episode?page=", "")
-                            .toInt() else null
+                            .pageEpisodes() else null
                     when {
                         prevPage != null -> backButton.isGone = false
                         prevPage == null -> backButton.isGone = true

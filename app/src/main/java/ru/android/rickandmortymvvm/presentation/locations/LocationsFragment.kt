@@ -18,6 +18,7 @@ import ru.android.rickandmortymvvm.base.FragmentListenerUtils
 import ru.android.rickandmortymvvm.databinding.FragmentLocationsBinding
 import ru.android.rickandmortymvvm.presentation.LocationScreenOne
 import ru.android.rickandmortymvvm.presentation.state.LocationsVS
+import ru.android.rickandmortymvvm.presentation.utils.pageLocations
 
 class LocationsFragment : Fragment(), LocationsAdapter.Listener {
 
@@ -88,18 +89,15 @@ class LocationsFragment : Fragment(), LocationsAdapter.Listener {
                         }
                     }
                     nextPage =
-                        if (it.locationsVM.info?.next != null) it.locationsVM.info.next.replace(
-                            "https://rickandmortyapi.com/api/location?page=",
-                            ""
-                        ).toInt() else null
+                        if (it.locationsVM.info?.next != null) it.locationsVM.info.next
+                            .pageLocations() else null
                     when {
                         nextPage != null -> nextButton.isGone = false
                         nextPage == null -> nextButton.isGone = true
                     }
                     prevPage =
                         if (it.locationsVM.info?.prev != null) it.locationsVM.info.prev.toString()
-                            .replace("https://rickandmortyapi.com/api/location?page=", "")
-                            .toInt() else null
+                            .pageLocations() else null
                     when {
                         prevPage != null -> backButton.isGone = false
                         prevPage == null -> backButton.isGone = true
