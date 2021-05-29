@@ -18,7 +18,9 @@ import ru.android.rickandmortymvvm.base.FragmentListenerUtils
 import ru.android.rickandmortymvvm.databinding.FragmentLocationsBinding
 import ru.android.rickandmortymvvm.presentation.LocationScreenOne
 import ru.android.rickandmortymvvm.presentation.state.LocationsVS
+import ru.android.rickandmortymvvm.presentation.utils.gone
 import ru.android.rickandmortymvvm.presentation.utils.pageLocations
+import ru.android.rickandmortymvvm.presentation.utils.visible
 
 class LocationsFragment : Fragment(), LocationsAdapter.Listener {
 
@@ -64,8 +66,8 @@ class LocationsFragment : Fragment(), LocationsAdapter.Listener {
             adapter = locationsAdapter
         }
 
-        nextButton.isGone = true
-        backButton.isGone = true
+        nextButton.gone()
+        backButton.gone()
 
         buttonBack.setOnClickListener {
             activity?.onBackPressed()
@@ -92,15 +94,15 @@ class LocationsFragment : Fragment(), LocationsAdapter.Listener {
                         if (it.locationsVM.info?.next != null) it.locationsVM.info.next
                             .pageLocations() else null
                     when {
-                        nextPage != null -> nextButton.isGone = false
-                        nextPage == null -> nextButton.isGone = true
+                        nextPage != null -> nextButton.visible()
+                        nextPage == null -> nextButton.gone()
                     }
                     prevPage =
                         if (it.locationsVM.info?.prev != null) it.locationsVM.info.prev.toString()
                             .pageLocations() else null
                     when {
-                        prevPage != null -> backButton.isGone = false
-                        prevPage == null -> backButton.isGone = true
+                        prevPage != null -> backButton.visible()
+                        prevPage == null -> backButton.gone()
                     }
                 }
                 is LocationsVS.ShowLoader -> {

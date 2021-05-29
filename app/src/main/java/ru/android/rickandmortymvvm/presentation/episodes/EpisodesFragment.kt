@@ -18,7 +18,9 @@ import ru.android.rickandmortymvvm.base.FragmentListenerUtils
 import ru.android.rickandmortymvvm.databinding.FragmentEpisodesBinding
 import ru.android.rickandmortymvvm.presentation.EpisodeScreenOne
 import ru.android.rickandmortymvvm.presentation.state.EpisodesVS
+import ru.android.rickandmortymvvm.presentation.utils.gone
 import ru.android.rickandmortymvvm.presentation.utils.pageEpisodes
+import ru.android.rickandmortymvvm.presentation.utils.visible
 
 class EpisodesFragment : Fragment(), EpisodesAdapter.Listener {
 
@@ -64,8 +66,8 @@ class EpisodesFragment : Fragment(), EpisodesAdapter.Listener {
             adapter = episodesAdapter
         }
 
-        nextButton.isGone = true
-        backButton.isGone = true
+        nextButton.gone()
+        backButton.gone()
 
         buttonBack.setOnClickListener {
             activity?.onBackPressed()
@@ -92,15 +94,15 @@ class EpisodesFragment : Fragment(), EpisodesAdapter.Listener {
                         if (it.episodesVM.info?.next != null) it.episodesVM.info.next
                             .pageEpisodes() else null
                     when {
-                        nextPage != null -> nextButton.isGone = false
-                        nextPage == null -> nextButton.isGone = true
+                        nextPage != null -> nextButton.visible()
+                        nextPage == null -> nextButton.gone()
                     }
                     prevPage =
                         if (it.episodesVM.info?.prev != null) it.episodesVM.info.prev.toString()
                             .pageEpisodes() else null
                     when {
-                        prevPage != null -> backButton.isGone = false
-                        prevPage == null -> backButton.isGone = true
+                        prevPage != null -> backButton.visible()
+                        prevPage == null -> backButton.gone()
                     }
                 }
                 is EpisodesVS.ShowLoader -> {

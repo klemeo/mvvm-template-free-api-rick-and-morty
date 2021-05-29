@@ -18,7 +18,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.android.rickandmortymvvm.base.FragmentListenerUtils
 import ru.android.rickandmortymvvm.presentation.CharacterScreenOne
 import ru.android.rickandmortymvvm.presentation.state.CharactersVS
+import ru.android.rickandmortymvvm.presentation.utils.gone
 import ru.android.rickandmortymvvm.presentation.utils.pageCharacters
+import ru.android.rickandmortymvvm.presentation.utils.visible
 
 class CharactersFragment : Fragment(), CharactersAdapter.Listener {
 
@@ -64,8 +66,8 @@ class CharactersFragment : Fragment(), CharactersAdapter.Listener {
             adapter = charactersAdapter
         }
 
-        backButton.isGone = true
-        nextButton.isGone = true
+        backButton.gone()
+        nextButton.gone()
 
         buttonBack.setOnClickListener {
             activity?.onBackPressed()
@@ -94,15 +96,15 @@ class CharactersFragment : Fragment(), CharactersAdapter.Listener {
                         if (it.charactersVM.info?.next != null) it.charactersVM.info.next
                             .pageCharacters() else null
                     when {
-                        nextPage != null -> nextButton.isGone = false
-                        nextPage == null -> nextButton.isGone = true
+                        nextPage != null -> nextButton.visible()
+                        nextPage == null -> nextButton.gone()
                     }
                     prevPage =
                         if (it.charactersVM.info?.prev != null) it.charactersVM.info.prev.toString()
                             .pageCharacters() else null
                     when {
-                        prevPage != null -> backButton.isGone = false
-                        prevPage == null -> backButton.isGone = true
+                        prevPage != null -> backButton.visible()
+                        prevPage == null -> backButton.gone()
                     }
 
                 }
