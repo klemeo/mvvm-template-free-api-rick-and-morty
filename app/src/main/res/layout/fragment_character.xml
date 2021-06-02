@@ -77,7 +77,7 @@
                             android:fontFamily="@font/almendra_sc"
                             android:gravity="center"
                             android:text="Mechanical Morty"
-                            android:textColor="@color/black" />
+                            android:textColor="?attr/colorOnSecondary" />
 
                         <TextView
                             android:id="@+id/textStatus"
