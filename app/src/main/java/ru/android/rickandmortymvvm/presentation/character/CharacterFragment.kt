@@ -22,8 +22,7 @@ import ru.android.rickandmortymvvm.base.FragmentListenerUtils
 import ru.android.rickandmortymvvm.databinding.FragmentCharacterBinding
 import ru.android.rickandmortymvvm.presentation.EpisodeScreenTwo
 import ru.android.rickandmortymvvm.presentation.state.CharacterVS
-import ru.android.rickandmortymvvm.presentation.utils.invisible
-import ru.android.rickandmortymvvm.presentation.utils.visible
+import ru.android.rickandmortymvvm.presentation.utils.*
 
 class CharacterFragment : Fragment(), EpisodeNumberAdapter.Listener {
 
@@ -89,9 +88,9 @@ class CharacterFragment : Fragment(), EpisodeNumberAdapter.Listener {
                     textLocation.text = it.charactersVM.origin?.name
 
                     when (it.charactersVM.status) {
-                        "Alive" -> textStatus.setTextColor(Color.parseColor("#4CAF50"))
-                        "Dead" -> textStatus.setTextColor(Color.parseColor("#F44336"))
-                        else -> textStatus.setTextColor(Color.parseColor("#B89DA8"))
+                        "Alive" -> textStatus.getColorGreen()
+                        "Dead" -> textStatus.getColorRed()
+                        else -> textStatus.getColorGrey()
                     }
                     it.charactersVM.episode?.let { episode -> episodeAdapter.add(episode) }
                 }

@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_character.view.*
 import ru.android.rickandmortymvvm.R
 import ru.android.rickandmortymvvm.presentation.model.character.CharacterResultBody
+import ru.android.rickandmortymvvm.presentation.utils.*
 
 class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
 
@@ -52,9 +53,9 @@ class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
             itemView.textLocation.text = result.origin?.name
 
             when (result.status) {
-                "Alive" -> itemView.textStatus.setTextColor(Color.parseColor("#4CAF50"))
-                "Dead" -> itemView.textStatus.setTextColor(Color.parseColor("#F44336"))
-                else -> itemView.textStatus.setTextColor(Color.parseColor("#B89DA8"))
+                "Alive" -> itemView.textStatus.getColorGreen()
+                "Dead" -> itemView.textStatus.getColorRed()
+                else -> itemView.textStatus.getColorGrey()
             }
             itemView.cvPostItem.setOnClickListener {
                 mListener?.onPostClicked(result.id ?: 1)
