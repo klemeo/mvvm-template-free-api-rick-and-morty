@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_number.view.*
 import ru.android.rickandmortymvvm.R
+import ru.android.rickandmortymvvm.presentation.utils.pageCharacter
 
 class LocationAdapter: RecyclerView.Adapter<LocationAdapter.ViewHolder>() {
 
@@ -39,10 +40,10 @@ class LocationAdapter: RecyclerView.Adapter<LocationAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(result: String) {
 
-            itemView.numberView.text = result.replace("https://rickandmortyapi.com/api/character/", "")
+            itemView.numberView.text = result.pageCharacter().toString()
 
             itemView.numberCardItem.setOnClickListener {
-                mListener?.onPostClicked(result.replace("https://rickandmortyapi.com/api/character/", "").toInt())
+                mListener?.onPostClicked(result.pageCharacter())
             }
         }
     }
