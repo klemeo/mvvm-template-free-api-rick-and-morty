@@ -21,6 +21,8 @@ import ru.android.rickandmortymvvm.base.FragmentListenerUtils
 import ru.android.rickandmortymvvm.databinding.FragmentEpisodeBinding
 import ru.android.rickandmortymvvm.presentation.CharacterScreenTwo
 import ru.android.rickandmortymvvm.presentation.state.EpisodeVS
+import ru.android.rickandmortymvvm.presentation.utils.invisible
+import ru.android.rickandmortymvvm.presentation.utils.visible
 
 class EpisodeFragment : Fragment(), CharacterNumberAdapter.Listener {
 
@@ -84,11 +86,11 @@ class EpisodeFragment : Fragment(), CharacterNumberAdapter.Listener {
                 }
                 is EpisodeVS.ShowLoader -> {
                     if (it.showLoader) {
-                        pbPost.visibility = View.VISIBLE
-                        linearLayout.visibility = View.INVISIBLE
+                        pbPost.visible()
+                        linearLayout.invisible()
                     } else {
-                        pbPost.visibility = View.INVISIBLE
-                        linearLayout.visibility = View.VISIBLE
+                        pbPost.invisible()
+                        linearLayout.visible()
                     }
                     Log.i("ShowLoader", it.showLoader.toString())
                 }

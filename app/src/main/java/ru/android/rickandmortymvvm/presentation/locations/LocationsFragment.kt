@@ -19,6 +19,7 @@ import ru.android.rickandmortymvvm.databinding.FragmentLocationsBinding
 import ru.android.rickandmortymvvm.presentation.LocationScreenOne
 import ru.android.rickandmortymvvm.presentation.state.LocationsVS
 import ru.android.rickandmortymvvm.presentation.utils.gone
+import ru.android.rickandmortymvvm.presentation.utils.invisible
 import ru.android.rickandmortymvvm.presentation.utils.pageLocations
 import ru.android.rickandmortymvvm.presentation.utils.visible
 
@@ -107,11 +108,11 @@ class LocationsFragment : Fragment(), LocationsAdapter.Listener {
                 }
                 is LocationsVS.ShowLoader -> {
                     if (it.showLoader) {
-                        pbPost.visibility = View.VISIBLE
-                        recyclerView.visibility = View.INVISIBLE
+                        pbPost.visible()
+                        recyclerView.invisible()
                     } else {
-                        pbPost.visibility = View.INVISIBLE
-                        recyclerView.visibility = View.VISIBLE
+                        pbPost.invisible()
+                        recyclerView.visible()
                     }
                     Log.i("ShowLoader", it.showLoader.toString())
                 }

@@ -19,6 +19,7 @@ import ru.android.rickandmortymvvm.databinding.FragmentEpisodesBinding
 import ru.android.rickandmortymvvm.presentation.EpisodeScreenOne
 import ru.android.rickandmortymvvm.presentation.state.EpisodesVS
 import ru.android.rickandmortymvvm.presentation.utils.gone
+import ru.android.rickandmortymvvm.presentation.utils.invisible
 import ru.android.rickandmortymvvm.presentation.utils.pageEpisodes
 import ru.android.rickandmortymvvm.presentation.utils.visible
 
@@ -107,11 +108,11 @@ class EpisodesFragment : Fragment(), EpisodesAdapter.Listener {
                 }
                 is EpisodesVS.ShowLoader -> {
                     if (it.showLoader) {
-                        pbPost.visibility = View.VISIBLE
-                        recyclerView.visibility = View.INVISIBLE
+                        pbPost.visible()
+                        recyclerView.invisible()
                     } else {
-                        pbPost.visibility = View.INVISIBLE
-                        recyclerView.visibility = View.VISIBLE
+                        pbPost.invisible()
+                        recyclerView.visible()
                     }
                     Log.i("ShowLoader", it.showLoader.toString())
                 }
