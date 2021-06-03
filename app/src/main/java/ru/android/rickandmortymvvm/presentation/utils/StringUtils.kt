@@ -14,3 +14,13 @@ fun String.pageLocations(): Int = this.replace(
     "https://rickandmortyapi.com/api/location?page=",
     ""
 ).toInt()
+
+fun String.pageCharacter(): Int = this.replace(
+    "https://rickandmortyapi.com/api/character/",
+    ""
+).toInt()
+
+fun String.pageEpisode(): Int = this.replace(
+    "https://rickandmortyapi.com/api/episode/",
+    ""
+).toInt()

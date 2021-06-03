@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_number.view.*
 import ru.android.rickandmortymvvm.R
+import ru.android.rickandmortymvvm.presentation.utils.pageEpisode
 
 
-class EpisodeNumberAdapter: RecyclerView.Adapter<EpisodeNumberAdapter.ViewHolder>() {
+class EpisodeNumberAdapter : RecyclerView.Adapter<EpisodeNumberAdapter.ViewHolder>() {
 
     private val mList: MutableList<String> = mutableListOf()
     private var mListener: Listener? = null
@@ -40,10 +41,10 @@ class EpisodeNumberAdapter: RecyclerView.Adapter<EpisodeNumberAdapter.ViewHolder
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(result: String) {
 
-            itemView.numberView.text = result.replace("https://rickandmortyapi.com/api/episode/", "")
+            itemView.numberView.text = result.pageEpisode().toString()
 
             itemView.numberCardItem.setOnClickListener {
-                mListener?.onPostClicked(result.replace("https://rickandmortyapi.com/api/episode/", "").toInt())
+                mListener?.onPostClicked(result.pageEpisode())
             }
         }
     }
