@@ -73,7 +73,7 @@ class CharacterFragment : Fragment(), EpisodeNumberAdapter.Listener {
     }
 
     private fun observeViewModel() {
-        viewModel.viewCharacterState.observe(viewLifecycleOwner, {
+        viewModel.viewCharacterState.observe(viewLifecycleOwner) {
             when (it) {
                 is CharacterVS.AddCharacter -> {
 
@@ -85,7 +85,8 @@ class CharacterFragment : Fragment(), EpisodeNumberAdapter.Listener {
 
                     textName.text = it.charactersVM.name
                     textStatus.text = it.charactersVM.status
-                    textLocation.text = it.charactersVM.origin?.name
+                    textLocation.text = it.charactersVM.location?.name
+                    textFirstSeen.text = it.charactersVM.origin?.name
 
                     when (it.charactersVM.status) {
                         "Alive" -> textStatus.getColorGreen()
@@ -108,7 +109,7 @@ class CharacterFragment : Fragment(), EpisodeNumberAdapter.Listener {
                     it.message?.let { message -> Log.i("Error", message) }
                 }
             }
-        })
+        }
     }
 
     override fun onPostClicked(id: Int) {

@@ -1,6 +1,5 @@
 package ru.android.rickandmortymvvm.presentation.characters
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,22 +43,26 @@ class CharactersAdapter : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(result: CharacterResultBody) {
 
-            Glide.with(itemView)
-                .load(result.image)
-                .into(itemView.imagePreview)
+            with(itemView) {
+                Glide.with(this)
+                    .load(result.image)
+                    .into(imagePreview)
 
-            itemView.textName.text = result.name
-            itemView.textStatus.text = result.status
-            itemView.textLocation.text = result.origin?.name
+                textName.text = result.name
+                textStatus.text = result.status
+                textLocation.text = result.location?.name
+                textFirstSeen.text = result.origin?.name
 
-            when (result.status) {
-                "Alive" -> itemView.textStatus.getColorGreen()
-                "Dead" -> itemView.textStatus.getColorRed()
-                else -> itemView.textStatus.getColorGrey()
+                when (result.status) {
+                    "Alive" -> textStatus.getColorGreen()
+                    "Dead" -> textStatus.getColorRed()
+                    else -> textStatus.getColorGrey()
+                }
+                cvPostItem.setOnClickListener {
+                    mListener?.onPostClicked(result.id ?: 1)
+                }
             }
-            itemView.cvPostItem.setOnClickListener {
-                mListener?.onPostClicked(result.id ?: 1)
-            }
+
         }
     }
 }
